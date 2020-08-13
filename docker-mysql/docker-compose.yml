@@ -1,0 +1,32 @@
+
+version: '3.3'
+volumes:
+  data:
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=SENHA
+      - MYSQL_DATABASE=app_development
+    deploy:
+        restart_policy:
+          condition: on-failure
+    tty: true
+  app:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    links:
+      - db
+    ports:
+      - 80:80
+    environment:
+      - PMA_ARBITRARY=1
+    deploy:
+        restart_policy:
+          condition: on-failure
+    tty: true

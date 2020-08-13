@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  db:
+    container_name: db
+    user: root
+    image: postgres:9.6
+    restart: always  
+    volumes:
+      - "/postgree_metabase:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=metabase
+      - POSTGRES_USER=metabase
+      - POSTGRES_PASSWORD=yami1766 
+    networks:
+      - metabase
+
+  metabase:
+    container_name: metabase-app
+    user: root
+    image: metabase/metabase:latest
+    restart: always 
+    volumes:
+      - "/metabase-data:/metabase-data"
+    ports:
+      - "3000:3000"
+    environment:
+      - MB_DB_TYPE=postgres
+      - MB_DB_DBNAME=metabase
+      - MB_DB_PORT=5432
+      - MB_DB_USER=metabase
+      - MB_DB_PASS=yami1766
+      - MB_DB_HOST=db
+      - MB_PLUGINS_DIR=/metabase-app
+    networks:
+      - metabase
+
+networks:
+  metabase:
+    driver: bridge

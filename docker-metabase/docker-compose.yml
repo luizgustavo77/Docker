@@ -1,0 +1,31 @@
+version: "2"
+services:
+  metabase:
+    container_name: "metabase"
+    image: metabase/metabase:latest
+    restart: always 
+    ports:
+      - "80:3000"
+    volumes:
+      - /metabase_data:/metabase-data
+    environment:
+      - MB_DB_TYPE=mysql
+      - MB_DB_HOST=db_mysql
+      - MB_DB_USER=root
+      - MB_DB_PORT=3306
+      - MB_DB_PASS=OptMetabase2016
+      - MB_DB_DBNAME=metabase
+      - MB_DB_FILE=/metabase-data/metabase.db
+    links:
+      - db_mysql
+  db_mysql:
+    container_name: "mysql-metabase"
+    restart: always 
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=OptMetabase2016
+      - MYSQL_DATABASE=metabase
+    volumes:
+      - /mysql_metabase:/var/lib/mysql

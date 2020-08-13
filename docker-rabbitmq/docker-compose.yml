@@ -1,0 +1,21 @@
+# SETAR MEMORIA MAX DO SERVIDOR E SETAR SEM LIMITE DE FILAS
+version: '3'
+services:
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=SWQOKODSQALRPCLNMEQG
+      - RABBITMQ_DEFAULT_USER=ymi
+      - RABBITMQ_DEFAULT_PASS=yami1766
+      - RABBITMQ_DEFAULT_VHOST=/
+      - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=0.9
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      # - /etc_rabbitmq:/etc/rabbitmq/enabled_plugins
+      #- "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro"
+      #- "./autocluster-0.4.1.ez:/usr/lib/rabbitmq/lib/rabbitmq_server-3.5.5/plugins/autocluster-0.4.1.ez"
+      - /lib_rabbitmq:/var/lib/rabbitmq
+      #- /etc_rabbitmq:/etc/rabbitmq/

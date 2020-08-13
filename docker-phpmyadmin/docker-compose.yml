@@ -1,0 +1,11 @@
+version: "3"
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    container_name: 'phpmyadmin'
+    environment:
+      PMA_HOST: IP
+      PMA_PORT: 3306
+    ports:
+      - '85:80'

@@ -1,0 +1,25 @@
+version: "2"
+services:
+  db:
+      image: mariadb
+      container_name: mariadb
+      ports:
+        - "3306:3306"
+      environment:
+          - MYSQL_ROOT_PASSWORD=SENHA
+          - MYSQL_DATABASE=app_development
+      volumes:
+          - ./database:/var/lib/mysql
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: phpmyadmin
+      environment:
+          - PMA_ARBITRARY=1
+          - PMA_HOST=db
+      restart: always
+      ports:
+          - 80:80
+      volumes:
+          - /sessions
+      links:
+          - db
